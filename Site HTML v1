@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Channel Revenue Engine | Partner Program Playbook</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:#121933;
+      --panel-2:#192347;
+      --line:#2c396b;
+      --text:#edf2ff;
+      --muted:#b8c2e6;
+      --accent:#76a9ff;
+      --accent-2:#8df0d0;
+      --warn:#ffd479;
+      --good:#8df0d0;
+      --bad:#ff9e9e;
+      --shadow: 0 16px 40px rgba(0,0,0,.28);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1220px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(118,169,255,.15), transparent 24%),
+        radial-gradient(circle at top left, rgba(141,240,208,.10), transparent 18%),
+        linear-gradient(180deg, #0b1020 0%, #0f1630 100%);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(11,16,32,.7);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .topbar-inner {
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; min-height:72px;
+    }
+    .brand {
+      display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:.2px;
+    }
+    .brand-mark {
+      width:40px; height:40px; border-radius:12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:#08101f; display:grid; place-items:center; font-weight:900;
+      box-shadow: var(--shadow);
+    }
+    .nav {
+      display:flex; gap:10px; flex-wrap: wrap; justify-content:flex-end;
+    }
+    .nav a {
+      color: var(--muted);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: .2s ease;
+      font-size: .95rem;
+    }
+    .nav a:hover { color: var(--text); border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.04); }
+
+    .hero {
+      padding: 72px 0 40px;
+    }
+    .hero-grid {
+      display:grid; grid-template-columns: 1.25fr .95fr; gap:28px; align-items:stretch;
+    }
+    .hero-card, .panel {
+      background: linear-gradient(180deg, rgba(25,35,71,.88), rgba(18,25,51,.95));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-main {
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:8px;
+      color: var(--accent-2);
+      font-weight:700; font-size:.9rem;
+      border:1px solid rgba(141,240,208,.2);
+      background: rgba(141,240,208,.06);
+      padding:8px 12px; border-radius:999px;
+    }
+    h1 {
+      font-size: clamp(2.1rem, 4vw, 4rem);
+      line-height:1.03;
+      margin: 16px 0 16px;
+      letter-spacing:-.04em;
+    }
+    .lead {
+      color: var(--muted); font-size:1.08rem; max-width: 760px;
+    }
+    .hero-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top: 24px; }
+    .btn {
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 13px 18px; border-radius: 12px; font-weight:700;
+      border: 1px solid rgba(255,255,255,.1); transition:.2s ease;
+    }
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), #94baff);
+      color:#08101f; border:none;
+    }
+    .btn.secondary { background: rgba(255,255,255,.04); color:var(--text); }
+    .btn:hover { transform: translateY(-1px); }
+
+    .hero-side { padding: 24px; display:grid; gap:16px; }
+    .stat-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:14px; }
+    .stat {
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 16px; padding: 18px;
+    }
+    .stat .value { font-size: 1.8rem; font-weight: 800; letter-spacing: -.03em; }
+    .stat .label { color: var(--muted); font-size:.92rem; margin-top:6px; }
+    .mini-note {
+      background: rgba(118,169,255,.08);
+      border:1px solid rgba(118,169,255,.2);
+      color: var(--text);
+      padding: 16px 18px;
+      border-radius: 16px;
+    }
+
+    .section { padding: 24px 0 20px; }
+    .section-header {
+      display:flex; justify-content:space-between; gap:16px; align-items:end; margin-bottom:18px;
+    }
+    .section-header h2 {
+      margin:0;
+      font-size: clamp(1.45rem, 2.2vw, 2.2rem);
+      letter-spacing:-.03em;
+    }
+    .section-header p { margin:0; color:var(--muted); max-width:720px; }
+
+    .kicker {
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing:.12em;
+      font-size:.78rem;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
+    .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+    .card {
+      background: linear-gradient(180deg, rgba(18,25,51,.92), rgba(11,16,32,.92));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+    .card h3, .card h4 { margin: 0 0 10px; letter-spacing:-.02em; }
+    .card p { color: var(--muted); margin: 0 0 14px; }
+    .pill-row { display:flex; flex-wrap:wrap; gap:8px; }
+    .pill {
+      padding:8px 10px; border-radius:999px;
+      font-size:.82rem; color: var(--text);
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
+    }
+    .list {
+      margin: 0; padding-left: 18px; color: var(--muted);
+    }
+    .list li { margin: 7px 0; }
+    .callout {
+      border-left: 3px solid var(--accent-2);
+      background: rgba(141,240,208,.06);
+      padding: 14px 16px;
+      border-radius: 12px;
+      color: var(--text);
+    }
+
+    .accordion { display:grid; gap:12px; }
+    details {
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      overflow: hidden;
+    }
+    summary {
+      list-style:none;
+      cursor:pointer;
+      padding:18px 20px;
+      font-weight:700;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+    }
+    summary::-webkit-details-marker { display:none; }
+    summary span.meta { font-size:.85rem; color: var(--accent-2); font-weight:700; }
+    .details-body {
+      padding: 0 20px 20px;
+      color: var(--muted);
+      border-top:1px solid rgba(255,255,255,.06);
+    }
+
+    .timeline {
+      display:grid; gap:12px; margin-top: 10px;
+    }
+    .step {
+      display:grid; grid-template-columns: 38px 1fr; gap:14px;
+      align-items:start;
+    }
+    .step-num {
+      width:38px; height:38px; border-radius:50%;
+      display:grid; place-items:center;
+      background: rgba(118,169,255,.12);
+      border:1px solid rgba(118,169,255,.22);
+      color: var(--accent);
+      font-weight: 800;
+    }
+    .step strong { display:block; margin-bottom:4px; color: var(--text); }
+
+    .resource-table {
+      width:100%; border-collapse: collapse; overflow:hidden;
+      border-radius: 16px;
+    }
+    .resource-table th, .resource-table td {
+      padding: 14px 14px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      vertical-align: top;
+      text-align:left;
+    }
+    .resource-table th { color: var(--text); font-size:.95rem; }
+    .resource-table td { color: var(--muted); }
+    .resource-table tr:last-child td { border-bottom:none; }
+
+    .tabs {
+      display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;
+    }
+    .tab-btn {
+      padding:10px 14px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04);
+      color: var(--text); cursor:pointer; font-weight:700;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(118,169,255,.24), rgba(141,240,208,.16));
+      border-color: rgba(141,240,208,.28);
+    }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+
+    .footer {
+      padding: 30px 0 48px;
+      color: var(--muted);
+    }
+    .footer-card {
+      padding: 24px;
+      display:flex; justify-content:space-between; gap:18px; align-items:center; flex-wrap:wrap;
+    }
+
+    .muted { color: var(--muted); }
+    .accent { color: var(--accent-2); }
+    .spacer { height: 8px; }
+
+    @media (max-width: 1024px) {
+      .hero-grid, .grid-3 { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .topbar-inner { padding: 10px 0; align-items:flex-start; }
+      .nav { gap:6px; }
+      .hero { padding-top: 36px; }
+      .hero-main, .hero-side, .card { padding: 18px; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .section-header { display:block; }
+      .footer-card { align-items:flex-start; }
+    }
+    @media (max-width: 520px) {
+      .stat-grid { grid-template-columns: 1fr; }
+      .nav a { padding: 8px 10px; font-size:.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">CC</div>
+        <div>
+          <div>Channel Revenue Engine</div>
+          <div class="muted" style="font-size:.85rem;">Cybersecurity Partner Program Playbook</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#partner-management">Partner Management</a>
+        <a href="#partner-enablement">Enablement &amp; Co-Sell</a>
+        <a href="#revenue-engine">Revenue Engine</a>
+        <a href="#resources">Resources</a>
+        <a href="#segments">Partner Types</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-grid">
+        <div class="hero-card hero-main">
+          <div class="eyebrow">Modern channel strategy for cybersecurity growth</div>
+          <h1>Build partnerships that generate pipeline, accelerate deals, and scale recurring revenue.</h1>
+          <p class="lead">
+            This playbook is designed for companies evaluating a partner-led go-to-market motion. It outlines how a Channel Chief
+            recruits, activates, manages, and grows partners across VAR, MSP, GSI, and cloud-led motions—while aligning internal field teams around measurable revenue outcomes.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#partner-management">Explore the framework</a>
+            <a class="btn secondary" href="#resources">View engagement assets</a>
+          </div>
+        </div>
+
+        <aside class="hero-card hero-side">
+          <div class="stat-grid">
+            <div class="stat">
+              <div class="value">30-60-90</div>
+              <div class="label">Activation framework for new partners</div>
+            </div>
+            <div class="stat">
+              <div class="value">3 Motions</div>
+              <div class="label">Recruit, activate, and grow</div>
+            </div>
+            <div class="stat">
+              <div class="value">4 Routes</div>
+              <div class="label">VAR, MSP, GSI, and cloud marketplace</div>
+            </div>
+            <div class="stat">
+              <div class="value">1 Goal</div>
+              <div class="label">Revenue with and through partners</div>
+            </div>
+          </div>
+          <div class="mini-note">
+            <strong>Core principle:</strong> modern channel programs win when partners understand
+            <span class="accent">how they make money</span>, sellers understand
+            <span class="accent">how to co-sell</span>, and customers see
+            <span class="accent">clear business outcomes</span>.
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="overview" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="kicker">Overview</div>
+            <h2>The operating model</h2>
+          </div>
+          <p>
+            The site is organized around the three core pillars you requested, with an added modern revenue layer
+            embedded throughout: <strong>Partner Management</strong>, <strong>Partner Enablement &amp; Co-Sell</strong>, and <strong>Resources</strong>.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>1) Partner Management</h3>
+            <p>Two motions: protect and expand existing partners, while reducing time-to-first-deal for new partner recruits.</p>
+            <div class="pill-row">
+              <span class="pill">Existing</span>
+              <span class="pill">New / Onboarding</span>
+              <span class="pill">Joint planning</span>
+              <span class="pill">QBR cadence</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>2) Enablement &amp; Co-Sell</h3>
+            <p>Two audiences: internal teams who need a partner-first selling motion, and external partners who need to ramp quickly.</p>
+            <div class="pill-row">
+              <span class="pill">Internal</span>
+              <span class="pill">External</span>
+              <span class="pill">Field alignment</span>
+              <span class="pill">Competitive plays</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>3) Resources</h3>
+            <p>Practical tools and assets that help partner sellers find customer pain, position the portfolio, and progress opportunities.</p>
+            <div class="pill-row">
+              <span class="pill">Battlecards</span>
+              <span class="pill">Portal</span>
+              <span class="pill">Deal reg guide</span>
+              <span class="pill">3 questions</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="partner-management" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="kicker">Section 1</div>
+            <h2>Partner Management</h2>
+          </div>
+          <p>
+            Strong channel programs manage partners by lifecycle, not just logo count. Existing partners need strategic growth motions.
+            New partners need fast activation, role clarity, and early wins.
+          </p>
+        </div>
+
+        <div class="accordion">
+          <details open>
+            <summary>
+              <span>Existing Partners</span>
+              <span class="meta">Grow, retain, and expand</span>
+            </summary>
+            <div class="details-body">
+              <div class="grid-2">
+                <div class="card">
+                  <h3>Primary objective</h3>
+                  <p>Increase sourced and influenced pipeline while improving partner stickiness, executive alignment, and product attach rates.</p>
+                  <ul class="list">
+                    <li>Quarterly business reviews with pipeline, renewals, and whitespace planning</li>
+                    <li>Joint account mapping against priority territories and target accounts</li>
+                    <li>Cross-sell and upsell plays across the product suite</li>
+                    <li>Named CAM / channel coverage model with clear internal ownership</li>
+                    <li>Partner scorecards tied to behavior, pipeline quality, and execution</li>
+                  </ul>
+                </div>
+
+                <div class="card">
+                  <h3>Revenue creation process</h3>
+                  <div class="timeline">
+                    <div class="step">
+                      <div class="step-num">1</div>
+                      <div><strong>Review the book of business</strong><span class="muted">Map installed base, active reps, certifications, service capabilities, and whitespace.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">2</div>
+                      <div><strong>Build a joint plan</strong><span class="muted">Set target accounts, campaigns, customer plays, and mutual revenue goals.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">3</div>
+                      <div><strong>Inspect execution monthly</strong><span class="muted">Track sourced pipeline, registration quality, stage progression, and enablement gaps.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">4</div>
+                      <div><strong>Accelerate deals</strong><span class="muted">Support with SE alignment, pricing help, executive calls, and competitive strategy.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">5</div>
+                      <div><strong>Reward growth</strong><span class="muted">Use incentives, MDF, access, and roadmap visibility for productive partners.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="spacer"></div>
+              <div class="callout"><strong>What “good” looks like:</strong> active executive sponsorship, repeatable pipeline creation, multi-threaded seller relationships, and visible services or recurring revenue attachment.</div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span>New / Onboarding Partners</span>
+              <span class="meta">Recruit, activate, and get to first deal fast</span>
+            </summary>
+            <div class="details-body">
+              <div class="grid-2">
+                <div class="card">
+                  <h3>Primary objective</h3>
+                  <p>Recruit partners that fit the ideal profile and give them a structured path to their first qualified opportunity and first closed deal.</p>
+                  <ul class="list">
+                    <li>Define an Ideal Partner Profile by size, route-to-market, vertical focus, and technical capability</li>
+                    <li>Use targeted recruiting campaigns rather than broad “sign up” motions</li>
+                    <li>Run executive alignment early to validate mutual commitment</li>
+                    <li>Give each new partner a clear 30-60-90 activation plan</li>
+                    <li>Measure time-to-first-meeting, time-to-first-opportunity, and time-to-first-dollar</li>
+                  </ul>
+                </div>
+
+                <div class="card">
+                  <h3>30-60-90 onboarding motion</h3>
+                  <div class="timeline">
+                    <div class="step">
+                      <div class="step-num">30</div>
+                      <div><strong>Recruit &amp; align</strong><span class="muted">Finalize fit, agreement, portal access, key contacts, and target market selection.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">60</div>
+                      <div><strong>Enable &amp; position</strong><span class="muted">Train sales and technical roles, deliver messaging, battlecards, and first campaign support.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">90</div>
+                      <div><strong>Execute &amp; inspect</strong><span class="muted">Run first prospecting motion, inspect deal registrations, and support the first live opportunities.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="spacer"></div>
+              <div class="callout"><strong>Key mindset:</strong> onboarding is not complete when content is delivered. It is complete when the partner can create pipeline and progress deals with minimal friction.</div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="partner-enablement" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="kicker">Section 2</div>
+            <h2>Partner Enablement &amp; Co-Sell</h2>
+          </div>
+          <p>
+            “Evangelization” is too soft for modern channel sales. Today’s winning programs focus on role-based enablement,
+            co-sell execution, and repeatable motions that help both internal and external teams create pipeline.
+          </p>
+        </div>
+
+        <div class="accordion">
+          <details open>
+            <summary>
+              <span>Internal</span>
+              <span class="meta">How direct teams and channel teams work together</span>
+            </summary>
+            <div class="details-body">
+              <div class="grid-2">
+                <div class="card">
+                  <h3>Internal alignment priorities</h3>
+                  <ul class="list">
+                    <li>Define when an AE should lead direct, with partner, or through partner</li>
+                    <li>Clarify compensation alignment so partners are not viewed as conflict</li>
+                    <li>Create a deal-conflict framework and escalation path</li>
+                    <li>Train direct sellers on why each partner type matters in the sales cycle</li>
+                    <li>Provide field-ready talk tracks, qualification guides, and co-sell plays</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <h3>Internal pipeline creation process</h3>
+                  <div class="timeline">
+                    <div class="step">
+                      <div class="step-num">1</div>
+                      <div><strong>Map partner coverage to field coverage</strong><span class="muted">Align partners by territory, segment, vertical, and capability.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">2</div>
+                      <div><strong>Choose account motions</strong><span class="muted">Pick named-account, territory, or campaign-based engagement models.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">3</div>
+                      <div><strong>Launch co-sell plays</strong><span class="muted">Run structured plays with customer pain, target persona, and clear call-to-action.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">4</div>
+                      <div><strong>Inspect results</strong><span class="muted">Review sourced vs influenced opportunities, win rates, and stage conversion.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              <span>External</span>
+              <span class="meta">How partners learn, position, and sell</span>
+            </summary>
+            <div class="details-body">
+              <div class="grid-2">
+                <div class="card">
+                  <h3>External enablement priorities</h3>
+                  <ul class="list">
+                    <li>Role-based content for sellers, SEs, and services teams</li>
+                    <li>Clear use cases by customer pain and buyer persona</li>
+                    <li>Competitive messaging and objection handling</li>
+                    <li>Fast access to pricing, scoping, and deal registration</li>
+                    <li>Simple language around where the portfolio fits and why it wins</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <h3>Partner-facing pipeline creation process</h3>
+                  <div class="timeline">
+                    <div class="step">
+                      <div class="step-num">1</div>
+                      <div><strong>Lead with discovery</strong><span class="muted">Give sellers a short qualification framework to uncover urgency and pain.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">2</div>
+                      <div><strong>Position the suite</strong><span class="muted">Move from single product talk tracks to platform and business outcome messaging.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">3</div>
+                      <div><strong>Register the deal</strong><span class="muted">Reduce friction with clear steps, deal protection, and support expectations.</span></div>
+                    </div>
+                    <div class="step">
+                      <div class="step-num">4</div>
+                      <div><strong>Advance with support</strong><span class="muted">Provide technical validation, pricing help, executive sponsorship, and customer references.</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="spacer"></div>
+              <div class="callout"><strong>Enablement rule:</strong> if a partner seller cannot explain the customer pain, business value, and next step in under two minutes, the motion is still too complicated.</div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="revenue-engine" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="kicker">Embedded throughout</div>
+            <h2>Revenue Engine</h2>
+          </div>
+          <p>
+            This section is not separate from the channel program—it is the reason the program exists. Everything in the model should tie to how revenue is created, expanded, and retained.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Pipeline Architecture</h3>
+            <ul class="list">
+              <li>Partner-sourced pipeline</li>
+              <li>Partner-influenced pipeline</li>
+              <li>Direct + partner co-sell opportunities</li>
+              <li>Renewal and expansion motions</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Profitability Story</h3>
+            <ul class="list">
+              <li>Margin protection and deal registration clarity</li>
+              <li>Services attach and deployment opportunities</li>
+              <li>Recurring revenue and managed offerings</li>
+              <li>Time-to-first-dollar for new partners</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Marketplace &amp; Ecosystem</h3>
+            <ul class="list">
+              <li>Hyperscaler field alignment</li>
+              <li>Cloud marketplace procurement path</li>
+              <li>Private offer readiness</li>
+              <li>Joint campaigns with ecosystem sellers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resources" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="kicker">Section 3</div>
+            <h2>Resources</h2>
+          </div>
+          <p>
+            The following items are the assets a Channel Chief would create to drive engagement, improve seller confidence, and help partners progress opportunities.
+          </p>
+        </div>
+
+        <div class="card">
+          <table class="resource-table">
+            <thead>
+              <tr>
+                <th>Resource</th>
+                <th>Purpose</th>
+                <th>What it should include</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>“3 Simple Questions” Hook</strong></td>
+                <td>Give partner sellers a fast discovery framework that creates urgency in early customer conversations.</td>
+                <td>Three customer-facing questions, follow-up prompts, ideal personas, and example pain signals.</td>
+              </tr>
+              <tr>
+                <td><strong>Product Battlecard</strong></td>
+                <td>Help sellers position the product suite quickly and consistently.</td>
+                <td>Quick facts, key value props, target customers, differentiation, competitive notes, and objection handling.</td>
+              </tr>
+              <tr>
+                <td><strong>Deal Registration Guide</strong></td>
+                <td>Remove ambiguity around deal protection, timing, and internal routing.</td>
+                <td>Eligibility, steps to register, approval flow, timelines, support coverage, and escalation contacts.</td>
+              </tr>
+              <tr>
+                <td><strong>Scope &amp; Pricing Guide</strong></td>
+                <td>Help partners qualify opportunities and move faster toward quoting.</td>
+                <td>Packaging logic, pricing guardrails, scoping assumptions, services flags, and when to engage internal teams.</td>
+              </tr>
+              <tr>
+                <td><strong>Partner Portal</strong></td>
+                <td>Create a central destination for engagement and execution.</td>
+                <td>How to become a partner, training, register a deal, benefits, content library, support, and certifications.</td>
+              </tr>
+              <tr>
+                <td><strong>First Deal Playbook</strong></td>
+                <td>Reduce time-to-first-revenue for newly onboarded partners.</td>
+                <td>First target profile, sample outreach, discovery questions, demo path, deal support, and close plan.</td>
+              </tr>
+              <tr>
+                <td><strong>Joint Account Planning Template</strong></td>
+                <td>Help both sides prioritize accounts and owners.</td>
+                <td>Named accounts, owners, whitespace, mutual goals, target plays, and review cadence.</td>
+              </tr>
+              <tr>
+                <td><strong>Partner QBR Template</strong></td>
+                <td>Create a repeatable operating cadence for existing partners.</td>
+                <td>Revenue trends, pipeline health, top opportunities, blockers, enablement gaps, and next-quarter priorities.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>Sample: “3 Simple Questions”</h3>
+            <p>These are designed to hook a customer into a larger security conversation without forcing the partner seller into deep technical language too early.</p>
+            <ol class="list">
+              <li><strong>How are you identifying threats before they become incidents?</strong></li>
+              <li><strong>What is your current time to detect and respond?</strong></li>
+              <li><strong>If your current controls failed tomorrow, how quickly would you know—and who would own the response?</strong></li>
+            </ol>
+          </div>
+
+          <div class="card">
+            <h3>Sample: Battlecard Snapshot</h3>
+            <ul class="list">
+              <li><strong>Why we win:</strong> fast time to value, strong security outcomes, and clear business impact</li>
+              <li><strong>What to say:</strong> lead with customer risk, operational burden, and measurable reduction in exposure</li>
+              <li><strong>How to progress:</strong> qualify pain, register the deal, pull in the right support, scope cleanly, and advance to customer validation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="segments" class="section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="kicker">Partner motion by type</div>
+            <h2>What changes by partner segment</h2>
+          </div>
+          <p>
+            The site should make clear that different partner types require different economic stories, sales motions, and levels of operational support.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="tabs" role="tablist" aria-label="Partner segment tabs">
+            <button class="tab-btn active" data-tab="var">VARs</button>
+            <button class="tab-btn" data-tab="msp">MSPs</button>
+            <button class="tab-btn" data-tab="gsi">GSIs</button>
+            <button class="tab-btn" data-tab="cloud">Cloud / Marketplace</button>
+          </div>
+
+          <div id="var" class="tab-panel active">
+            <div class="grid-2">
+              <div>
+                <h3>VAR priorities</h3>
+                <ul class="list">
+                  <li>Margin clarity and deal protection</li>
+                  <li>Fast quoting and easy seller positioning</li>
+                  <li>Competitive replacement plays</li>
+                  <li>Account mapping with direct reps</li>
+                </ul>
+              </div>
+              <div>
+                <h3>What the program should emphasize</h3>
+                <ul class="list">
+                  <li>Deal reg simplicity</li>
+                  <li>Battlecards and objection handling</li>
+                  <li>Channel manager accessibility</li>
+                  <li>Clear path from sourced lead to closed opportunity</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div id="msp" class="tab-panel">
+            <div class="grid-2">
+              <div>
+                <h3>MSP priorities</h3>
+                <ul class="list">
+                  <li>Recurring revenue and service attach</li>
+                  <li>Multi-tenant manageability</li>
+                  <li>Operational efficiency and automation</li>
+                  <li>Packaged service creation</li>
+                </ul>
+              </div>
+              <div>
+                <h3>What the program should emphasize</h3>
+                <ul class="list">
+                  <li>MSP pricing and packaging</li>
+                  <li>APIs, automation, and support model</li>
+                  <li>White-labeled or branded service frameworks</li>
+                  <li>Consumption and expansion economics</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div id="gsi" class="tab-panel">
+            <div class="grid-2">
+              <div>
+                <h3>GSI priorities</h3>
+                <ul class="list">
+                  <li>Executive sponsorship and strategic alignment</li>
+                  <li>Large transformation opportunities</li>
+                  <li>Industry-specific solution plays</li>
+                  <li>Joint IP or packaged offerings</li>
+                </ul>
+              </div>
+              <div>
+                <h3>What the program should emphasize</h3>
+                <ul class="list">
+                  <li>C-suite relationship maps</li>
+                  <li>Vertical storylines</li>
+                  <li>Solution integration points</li>
+                  <li>Multi-region and enterprise account orchestration</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div id="cloud" class="tab-panel">
+            <div class="grid-2">
+              <div>
+                <h3>Cloud / Marketplace priorities</h3>
+                <ul class="list">
+                  <li>Procurement simplicity</li>
+                  <li>Private offers and consumption alignment</li>
+                  <li>Joint field engagement with cloud sellers</li>
+                  <li>Marketplace visibility and attach motions</li>
+                </ul>
+              </div>
+              <div>
+                <h3>What the program should emphasize</h3>
+                <ul class="list">
+                  <li>Cloud seller maps and joint pursuit plans</li>
+                  <li>Marketplace packaging and listing readiness</li>
+                  <li>Consumption-aligned messaging</li>
+                  <li>Customer buying-path flexibility</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="card">
+          <div class="section-header" style="margin-bottom:10px;">
+            <div>
+              <div class="kicker">Summary</div>
+              <h2>What this site communicates</h2>
+            </div>
+          </div>
+          <p class="muted" style="margin-top:0;">
+            This is not a generic partner page. It presents a modern cybersecurity channel operating model:
+            recruit the right partners, activate them quickly, align the field, create repeatable co-sell motions,
+            and prove partner value through pipeline, profitability, and customer outcomes.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="hero-card footer-card">
+        <div>
+          <strong>Channel Revenue Engine</strong><br/>
+          <span class="muted">Website prototype for a cybersecurity Channel Chief pitch.</span>
+        </div>
+        <div class="muted">Built as a single-file HTML site for fast review, editing, and expansion.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const buttons = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.tab;
+        buttons.forEach(b => b.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(target).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
